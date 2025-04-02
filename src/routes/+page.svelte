@@ -1,19 +1,40 @@
-<script>
-	import ConnectDots from '../lib/ConnectDots.svelte';
-	let showAbout = false;
+<script lang="ts">
+	import MovingNumbers from '$lib/MovingNumbers.svelte';
+	import FlipDisplay from '$lib/FlipDisplay.svelte';
+	import type { Project } from '$lib/projects/projects';
 
-	function toggleAbout() {
+	let showAbout = false;
+	let hoveredProject: Project | null = null;
+	let animationCompleted = false;
+
+	function toggleAbout(): void {
 		showAbout = !showAbout;
+	}
+
+	function handleHover(event: CustomEvent<{ project: Project | null }>): void {
+		hoveredProject = event.detail.project;
+	}
+
+	function handleAnimationComplete(): void {
+		animationCompleted = true;
 	}
 </script>
 
 <div class="container">
 	<button type="button" on:click={toggleAbout} aria-label="Toggle About Section">ABOUT</button>
 	<div>
-		<h1>MADELEINE HAHN</h1>
+		<h1>
+			{#if hoveredProject}
+				{hoveredProject.title.toUpperCase()}
+			{:else}
+				<FlipDisplay finalText="MADELEINE HAHN" />
+			{/if}
+		</h1>
 		<h2>Editorial und Graphic Design</h2>
 	</div>
 	<p class="impressum">IMPRESSUM</p>
+
+	<MovingNumbers on:hover={handleHover} />
 
 	{#if showAbout}
 		<div
@@ -38,8 +59,6 @@
 	{/if}
 </div>
 
-<!-- <ConnectDots /> -->
-
 <style>
 	.container {
 		display: flex;
@@ -60,19 +79,24 @@
 		cursor: pointer;
 		padding: 0;
 		margin: 0;
+		font-family: 'AlteHaas';
+		z-index: 1000;
 	}
 
 	h1 {
 		font-size: 3em;
 		margin: 0;
 		letter-spacing: -0.05em;
+		transition: all 0.3s ease;
+		font-family: 'AlteHaas';
 	}
 
 	h2,
 	h3 {
-		font-size: 1.5em;
+		font-size: 2.5em;
 		margin: 0;
 		font-weight: normal;
+		font-family: 'FreightBook';
 	}
 
 	h2 {
@@ -82,6 +106,7 @@
 	p {
 		font-size: 1.5em;
 		margin: 0;
+		font-family: 'AlteHaas';
 	}
 
 	.overlay {
@@ -90,8 +115,10 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(12, 124, 210, 0.8);
-		color: white;
+		background-color: rgba(255, 255, 255, 0.5);
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
+		color: black;
 		display: flex;
 		justify-content: left;
 		align-items: flex-start;
