@@ -192,7 +192,7 @@
 
 	.project-description {
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.6;
+		line-height: 1.2;
 		margin-top: 1rem;
 		font-family: 'Helvetica', 'Arial', sans-serif;
 		letter-spacing: -0.01em;
@@ -258,7 +258,7 @@
 	.overlay p {
 		font-family: 'AlteHaas', 'Arial', sans-serif;
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.6;
+		line-height: 1.2;
 	}
 
 	/* Responsive Design */

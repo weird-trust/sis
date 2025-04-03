@@ -12,9 +12,9 @@ export const projects: Project[] = [
 	{
 		id: 1,
 		number: '01',
-		title: 'Bachelorarbeit',
+		title: 'AnsichtsSachen',
 		description:
-			'AnsichtsSachen\nZwischen Kitsch und Empfinden\nEine Selbsterkundung\nTäglich sichtbar, meist wenig beachtet. Für manche schick, für andere\nüberflüssig. Definierbar, aber doch zu subjektiv. Geliebt, verachtet oder gehasst: Kitsch ist kontrovers.\nZwischen ihm und uns steht oftmals eine emotionale, persönliche Verbindung. Sie kann auf verschiedenen Gefühlen basieren und unterliegt meistens ganz unterschiedlichen Anlässen.\n\nAnsichtsSachen ist eine fotografische Erkundung, entstanden im Rahmen meiner Bachelorarbeit 2024.',
+			'Täglich sichtbar, meist wenig beachtet. Für manche schick, für andere überflüssig. Definierbar, aber doch zu subjektiv. Geliebt, verachtet oder gehasst: Kitsch ist kontrovers. Zwischen ihm und uns steht oftmals eine emotionale, persönliche Verbindung. Sie kann auf verschiedenen Gefühlen basieren und unterliegt meistens ganz unterschiedlichen Anlässen. „AnsichtsSachen“ ist eine fotografische Erkundung zu Kitsch und Empfinden, entstanden im Rahmen meiner Bachelorarbeit 2024.\n\nKonzept\nFotografie\nEditorial Design\nText\n\nFototextbuch\n170 Seiten\n17,5 x 24 x 2 cm',
 		images: ['/images/01/01.jpg', '/images/01/02.jpg', '/images/01/03.jpg', '/images/01/04.jpg']
 	},
 	{

@@ -30,7 +30,7 @@
 				<FlipDisplay finalText="MADELEINE HAHN" />
 			{/if}
 		</h1>
-		<h2>Editorial und Graphic Design</h2>
+		<h2>Editorial & Graphic Design</h2>
 	</div>
 	<p class="impressum">IMPRESSUM</p>
 

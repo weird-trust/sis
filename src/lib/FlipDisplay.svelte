@@ -6,7 +6,7 @@
 	let displayText = '';
 	let isAnimating = true;
 
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
 
 	// Projektitel vorbereiten (alle in Großbuchstaben)
 	const projectTitles = projects.map((p) => p.title.toUpperCase());
