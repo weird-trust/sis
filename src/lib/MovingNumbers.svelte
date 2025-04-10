@@ -163,7 +163,7 @@
 		height: 40vh;
 		background-size: cover;
 		background-position: center;
-		opacity: 0.9;
+		opacity: 0.5;
 		z-index: 0;
 		transition: opacity 0.3s ease;
 	}

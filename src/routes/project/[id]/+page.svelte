@@ -201,7 +201,7 @@
 		padding: 0;
 		position: absolute;
 		top: 1rem;
-		left: 1rem;
+		left: 2rem;
 		z-index: 20;
 		font-family: 'alteHaas', 'Arial', sans-serif;
 		text-transform: uppercase;
@@ -213,7 +213,7 @@
 		font-family: 'Freight', serif;
 		font-style: italic;
 		font-weight: normal;
-		padding-top: 15px;
+		padding-top: 6px;
 	}
 
 	.project-number::before {
@@ -230,22 +230,23 @@
 	.project-title {
 		font-size: 2rem;
 		margin: 0;
-		font-family: 'Helvetica', 'Arial', sans-serif;
+		font-family: 'AlteHaas', 'Arial', sans-serif;
 		letter-spacing: -0.02em;
 	}
 
 	.project-subtitle {
-		font-size: 1.2rem;
-		margin: 0.5rem 0 1rem;
-		font-family: 'Helvetica', 'Arial', sans-serif;
-		letter-spacing: -0.01em;
+		font-size: 1.6rem;
+		margin: -0.5rem 0 0rem;
+		line-height: 1;
+		font-family: 'FreightBook', 'Arial', sans-serif;
+		/* letter-spacing: -0.01em; */
 		font-weight: normal;
 		font-style: italic;
 	}
 
 	.project-description p {
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.6;
+		line-height: 1.2;
 		margin-bottom: 1rem;
 		font-family: 'Helvetica', 'Arial', sans-serif;
 		letter-spacing: -0.01em;
@@ -259,8 +260,8 @@
 	}
 
 	.detail-item {
-		font-family: 'Helvetica', 'Arial', sans-serif;
-		font-size: 0.875rem;
+		font-family: 'FreightBook', 'Arial', sans-serif;
+		font-size: 1rem;
 		background-color: #f2f2f2;
 		padding: 0.25rem 0.5rem;
 		border-radius: 3px;
@@ -327,7 +328,7 @@
 	.overlay p {
 		font-family: 'AlteHaas', 'Arial', sans-serif;
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.6;
+		line-height: 1.2;
 		margin-bottom: 1rem;
 	}
 
@@ -371,7 +372,7 @@
 
 		.back-button {
 			top: 0.75rem;
-			left: 0.75rem;
+			left: 2rem;
 			font-family: 'AlteHaas', 'Arial', sans-serif;
 		}
 	}
@@ -385,7 +386,7 @@
 		padding: 0;
 		position: absolute;
 		top: 1rem;
-		right: 1rem;
+		right: 2rem;
 		z-index: 20;
 		font-family: 'alteHaas', 'Arial', sans-serif;
 		text-transform: uppercase;
