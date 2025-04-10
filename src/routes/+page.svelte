@@ -26,7 +26,9 @@
 </script>
 
 <div class="container">
-	<button type="button" on:click={toggleAbout} aria-label="Toggle About Section">ABOUT</button>
+	<button type="button" class="about" on:click={toggleAbout} aria-label="Toggle About Section"
+		>ABOUT</button
+	>
 	<div>
 		<h1>
 			{#if hoveredProject}
@@ -92,6 +94,10 @@
 		margin: 0;
 		font-family: 'AlteHaas';
 		z-index: 1000;
+	}
+
+	.about {
+		padding: 1rem;
 	}
 
 	h1 {

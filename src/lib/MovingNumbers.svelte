@@ -128,7 +128,7 @@
 
 	.number-point {
 		position: absolute;
-		font-size: 28px;
+		font-size: 2.5rem;
 		font-family: 'Freight', 'Times New Roman', Times, serif;
 		font-style: italic;
 		font-weight: normal;
