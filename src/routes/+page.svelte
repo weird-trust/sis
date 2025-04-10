@@ -1,20 +1,25 @@
 <script lang="ts">
 	import MovingNumbers from '$lib/MovingNumbers.svelte';
+	import Impressum from '$lib/Impressum.svelte';
 	import FlipDisplay from '$lib/FlipDisplay.svelte';
 	import type { Project } from '$lib/projects/projects';
 
 	let showAbout = false;
 	let hoveredProject: Project | null = null;
 	let animationCompleted = false;
+	let showImpressum = false;
 
 	function toggleAbout(): void {
 		showAbout = !showAbout;
 	}
 
+	function toggleImpressum(): void {
+		showImpressum = !showImpressum;
+	}
+
 	function handleHover(event: CustomEvent<{ project: Project | null }>): void {
 		hoveredProject = event.detail.project;
 	}
-
 	function handleAnimationComplete(): void {
 		animationCompleted = true;
 	}
@@ -30,32 +35,39 @@
 				<FlipDisplay finalText="MADELEINE HAHN" />
 			{/if}
 		</h1>
-		<h2>Editorial & Graphic Design</h2>
+		<h2>
+			{#if hoveredProject && hoveredProject.subtitle}
+				{hoveredProject.subtitle}
+			{:else}
+				Editorial und Graphic Design
+			{/if}
+		</h2>
 	</div>
-	<p class="impressum">IMPRESSUM</p>
+	<p class="impressum" on:click={toggleImpressum}>IMPRESSUM</p>
 
 	<MovingNumbers on:hover={handleHover} />
+	<Impressum bind:showImpressum />
 
 	{#if showAbout}
-		<div
+		<button
 			class="overlay"
-			role="button"
-			tabindex="0"
 			on:click={toggleAbout}
 			on:keydown={(e) => e.key === 'Enter' && toggleAbout()}
+			aria-label="Close About Section"
 		>
-			<div class="overlay-content">
+			<div class="overlay-content" on:click|stopPropagation>
 				<h3>Madeleine Hahn - Editorial & Graphic Design</h3>
 				<p>
-					Madeleine Hahn is a freelance designer based in Nuremberg, specializing in editorial and
-					graphic design. With a keen eye for aesthetics and structure, she crafts bespoke design
-					solutions tailored to meet the unique needs of her clients. Through creative and
-					strategically developed concepts, she creates visual experiences that are both engaging
-					and informative. Her work stands out for its precision and leaves a lasting impression
-					across print and digital media.
+					Madeleine Hahn ist eine freiberufliche Designerin aus Nürnberg mit dem Fokus auf
+					Editorial- und Grafikdesign. Ihre Gestaltung basiert auf klaren Konzepten, durchdachter
+					Typografie und dem gezielten Einsatz von Weißraum. Sie entwickelt Designs, die sowohl
+					ästhetisch ansprechend als auch funktional sind und Inhalte präzise kommunizieren.
+				</p>
+				<p class="contact">
+					Sag <a href="mailto:hallo@madeleinehahn.com">hallo@madeleinehahn.com</a>!
 				</p>
 			</div>
-		</div>
+		</button>
 	{/if}
 </div>
 
@@ -67,7 +79,6 @@
 		align-items: center;
 		height: 98vh;
 		text-align: center;
-		font-family: Arial, sans-serif;
 		position: relative;
 	}
 
@@ -88,7 +99,6 @@
 		margin: 0;
 		letter-spacing: -0.05em;
 		transition: all 0.3s ease;
-		font-family: 'AlteHaas';
 	}
 
 	h2,
@@ -130,6 +140,28 @@
 
 	.overlay-content {
 		max-width: 900px;
+	}
+
+	.overlay h3 {
+		font-family: 'AlteHaas', 'Arial', sans-serif;
+		font-size: 1.5rem;
+		margin-bottom: 1rem;
+	}
+
+	.overlay p {
+		font-family: 'AlteHaas', 'Arial', sans-serif;
+		font-size: 1.0625rem; /* 17px */
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.overlay .contact {
+		margin-top: 2rem;
+	}
+
+	.overlay a {
+		color: inherit;
+		text-decoration: underline;
 	}
 
 	.impressum {

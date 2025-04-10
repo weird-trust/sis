@@ -2,15 +2,21 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { projects, type Project } from '$lib/projects/projects';
+	import Impressum from '$lib/Impressum.svelte';
 
 	// Projekt basierend auf der ID aus der URL abrufen
 	$: projectId = parseInt($page.params.id);
 	$: project = projects.find((p) => p.id === projectId);
 
 	let showAbout = false;
+	let showImpressum = false;
 
 	function toggleAbout(): void {
 		showAbout = !showAbout;
+	}
+
+	function toggleImpressum(): void {
+		showImpressum = !showImpressum;
 	}
 
 	function goBack(): void {
@@ -31,7 +37,21 @@
 			<div class="project-info">
 				<div class="project-number">{project.number}</div>
 				<h1 class="project-title">{project.title}</h1>
-				<p class="project-description">{project.description}</p>
+				{#if project.subtitle}
+					<h2 class="project-subtitle">{project.subtitle}</h2>
+				{/if}
+				<div class="project-description">
+					{#each project.description.split('\n') as paragraph}
+						<p>{paragraph}</p>
+					{/each}
+				</div>
+				{#if project.details && project.details.length > 0}
+					<div class="project-details">
+						{#each project.details as detail}
+							<span class="detail-item">{detail}</span>
+						{/each}
+					</div>
+				{/if}
 			</div>
 
 			<div class="project-images">
@@ -50,8 +70,10 @@
 	{/if}
 
 	<div class="footer">
-		<p class="impressum">IMPRESSUM</p>
+		<p class="impressum" on:click={toggleImpressum}>IMPRESSUM</p>
 	</div>
+
+	<Impressum bind:showImpressum />
 
 	{#if showAbout}
 		<div
@@ -190,12 +212,37 @@
 		letter-spacing: -0.02em;
 	}
 
-	.project-description {
-		font-size: 1.0625rem; /* 17px */
-		line-height: 1.2;
-		margin-top: 1rem;
+	.project-subtitle {
+		font-size: 1.2rem;
+		margin: 0.5rem 0 1rem;
 		font-family: 'Helvetica', 'Arial', sans-serif;
 		letter-spacing: -0.01em;
+		font-weight: normal;
+		font-style: italic;
+	}
+
+	.project-description p {
+		font-size: 1.0625rem; /* 17px */
+		line-height: 1.6;
+		margin-bottom: 1rem;
+		font-family: 'Helvetica', 'Arial', sans-serif;
+		letter-spacing: -0.01em;
+	}
+
+	.project-details {
+		margin-top: 2rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+	}
+
+	.detail-item {
+		font-family: 'Helvetica', 'Arial', sans-serif;
+		font-size: 0.875rem;
+		background-color: #f2f2f2;
+		padding: 0.25rem 0.5rem;
+		border-radius: 3px;
+		display: inline-block;
 	}
 
 	.project-images {
@@ -258,7 +305,17 @@
 	.overlay p {
 		font-family: 'AlteHaas', 'Arial', sans-serif;
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.2;
+		line-height: 1.6;
+		margin-bottom: 1rem;
+	}
+
+	.overlay .contact {
+		margin-top: 2rem;
+	}
+
+	.overlay a {
+		color: inherit;
+		text-decoration: underline;
 	}
 
 	/* Responsive Design */
