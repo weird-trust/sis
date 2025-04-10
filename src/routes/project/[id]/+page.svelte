@@ -8,6 +8,9 @@
 	$: projectId = parseInt($page.params.id);
 	$: project = projects.find((p) => p.id === projectId);
 
+	// Berechne die nächste Projekt-ID
+	$: nextProjectId = getNextProjectId(projectId);
+
 	let showAbout = false;
 	let showImpressum = false;
 
@@ -22,6 +25,23 @@
 	function goBack(): void {
 		goto('/');
 	}
+
+	function goToNextProject(): void {
+		goto(`/project/${nextProjectId}`);
+	}
+
+	function getNextProjectId(currentId: number): number {
+		const sortedProjects = [...projects].sort((a, b) => a.id - b.id);
+		const currentIndex = sortedProjects.findIndex((p) => p.id === currentId);
+
+		// Wenn aktuelles Projekt das letzte ist, gehe zum ersten zurück
+		if (currentIndex === sortedProjects.length - 1 || currentIndex === -1) {
+			return sortedProjects[0].id;
+		}
+
+		// Sonst gehe zum nächsten Projekt
+		return sortedProjects[currentIndex + 1].id;
+	}
 </script>
 
 <div class="container">
@@ -30,6 +50,7 @@
 		<button type="button" class="about-btn" on:click={toggleAbout} aria-label="Toggle About Section"
 			>ABOUT</button
 		>
+		<button type="button" class="next-button" on:click={goToNextProject}>Next Project</button>
 	</div>
 
 	{#if project}
@@ -107,7 +128,6 @@
 	.header {
 		display: flex;
 		justify-content: space-between;
-		align-items: center;
 		padding: 1rem;
 		position: absolute;
 		top: 0;
@@ -183,6 +203,8 @@
 		top: 1rem;
 		left: 1rem;
 		z-index: 20;
+		font-family: 'alteHaas', 'Arial', sans-serif;
+		text-transform: uppercase;
 	}
 
 	.project-number {
@@ -352,5 +374,20 @@
 			left: 0.75rem;
 			font-family: 'AlteHaas', 'Arial', sans-serif;
 		}
+	}
+
+	.next-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 1rem;
+		text-align: right;
+		padding: 0;
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		z-index: 20;
+		font-family: 'alteHaas', 'Arial', sans-serif;
+		text-transform: uppercase;
 	}
 </style>
