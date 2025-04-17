@@ -30,7 +30,7 @@
 	<button type="button" class="about" on:click={toggleAbout} aria-label="Toggle About Section"
 		>ABOUT</button
 	>
-	<div>
+	<div class="title-container">
 		<h1>
 			{#if hoveredProject}
 				{hoveredProject.title.toUpperCase()}
@@ -64,6 +64,11 @@
 		position: relative;
 	}
 
+	.title-container {
+		position: relative;
+		z-index: 50; /* Sehr hoher z-index für den Titelcontainer */
+	}
+
 	button {
 		background: none;
 		border: none;
@@ -73,7 +78,8 @@
 		padding: 0;
 		margin: 0;
 		font-family: 'AlteHaas';
-		z-index: 1000;
+		z-index: 50; /* Sehr hoher z-index */
+		position: relative; /* Wichtig für z-index */
 	}
 
 	.about {
@@ -87,6 +93,8 @@
 		letter-spacing: -0.05em;
 		transition: all 0.3s ease;
 		font-family: 'AlteHaas';
+		position: relative;
+		z-index: 50; /* Sehr hoher z-index */
 
 		@media screen and (max-width: 768px) {
 			font-size: 2em;
@@ -100,6 +108,8 @@
 		margin: 0;
 		font-weight: normal;
 		font-family: 'FreightBook';
+		position: relative;
+		z-index: 50; /* Sehr hoher z-index */
 
 		@media screen and (max-width: 768px) {
 			font-size: 1.5em;
@@ -118,6 +128,8 @@
 		font-size: 1.5em;
 		margin: 0;
 		font-family: 'AlteHaas';
+		position: relative; /* Wichtig für z-index */
+		z-index: 50; /* Sehr hoher z-index */
 
 		@media screen and (max-width: 768px) {
 			font-size: 1em;
@@ -129,6 +141,6 @@
 		cursor: pointer;
 		font-style: normal;
 		padding: 1rem;
-		z-index: 1000;
+		z-index: 50; /* Sehr hoher z-index */
 	}
 </style>

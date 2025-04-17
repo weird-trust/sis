@@ -20,6 +20,7 @@
 	let points: PointPosition[] = [];
 	let animationFrame: number;
 	let preloadedImages: Record<number, boolean> = {}; // Cache für geladene Bilder
+	let isAnimating = true; // Flag zum Steuern der Animation
 
 	// Erstellt einen Punkt mit einfachen Positionswerten
 	const createPoint = (project: Project): PointPosition => {
@@ -28,8 +29,8 @@
 			x: Math.random() * 80 + 10, // 10-90% der Breite
 			y: Math.random() * 60 + 20, // 20-80% der Höhe
 			// Zufällige Geschwindigkeit und Richtung
-			vx: (Math.random() - 0.5) * 0.02,
-			vy: (Math.random() - 0.5) * 0.02
+			vx: (Math.random() - 0.5) * 0.05, // Etwas schneller für bessere Bewegung
+			vy: (Math.random() - 0.5) * 0.05 // Etwas schneller für bessere Bewegung
 		};
 	};
 
@@ -53,31 +54,35 @@
 	// Animation der Punkte
 	function startAnimation(): void {
 		const animate = () => {
-			// Wir erstellen eine neue Array-Instanz, damit Svelte die Änderungen erkennt
-			points = points.map((point) => {
-				// Neue Position berechnen
-				let newX = point.x + point.vx;
-				let newY = point.y + point.vy;
+			// Nur animieren, wenn isAnimating true ist
+			if (isAnimating) {
+				// Wir erstellen eine neue Array-Instanz, damit Svelte die Änderungen erkennt
+				points = points.map((point) => {
+					// Neue Position berechnen
+					let newX = point.x + point.vx;
+					let newY = point.y + point.vy;
 
-				// Rand-Kollision prüfen und umkehren
-				if (newX < 10 || newX > 90) {
-					point.vx *= -1;
-					newX = point.x + point.vx;
-				}
+					// Rand-Kollision prüfen und umkehren
+					if (newX < 10 || newX > 90) {
+						point.vx *= -1;
+						newX = point.x + point.vx;
+					}
 
-				if (newY < 20 || newY > 80) {
-					point.vy *= -1;
-					newY = point.y + point.vy;
-				}
+					if (newY < 20 || newY > 80) {
+						point.vy *= -1;
+						newY = point.y + point.vy;
+					}
 
-				// Aktualisierte Position zurückgeben
-				return {
-					...point,
-					x: newX,
-					y: newY
-				};
-			});
+					// Aktualisierte Position zurückgeben
+					return {
+						...point,
+						x: newX,
+						y: newY
+					};
+				});
+			}
 
+			// Immer den nächsten Frame anfordern, auch wenn die Animation pausiert ist
 			animationFrame = requestAnimationFrame(animate);
 		};
 
@@ -95,12 +100,14 @@
 
 	function handleHover(project: Project): void {
 		hoveredProject = project;
+		isAnimating = false; // Animation bei Hover stoppen
 		preloadImage(project); // Bild vorladen
 		dispatch('hover', { project });
 	}
 
 	function handleHoverEnd(): void {
 		hoveredProject = null;
+		isAnimating = true; // Animation wieder starten
 		dispatch('hover', { project: null });
 	}
 
@@ -122,11 +129,11 @@
 		</div>
 	{/each}
 
-	{#if hoveredProject}
-		<div class="preview-image-container">
+	<div class="preview-image-container" class:visible={hoveredProject !== null}>
+		{#if hoveredProject}
 			<div class="preview-image" style="background-image: url('{hoveredProject.images[0]}')"></div>
-		</div>
-	{/if}
+		{/if}
+	</div>
 </div>
 
 <style>
@@ -141,7 +148,7 @@
 
 	.number-point {
 		position: absolute;
-		font-size: 2.5rem;
+		font-size: 28px;
 		font-family: 'Freight', 'Times New Roman', Times, serif;
 		font-style: italic;
 		font-weight: normal;
@@ -175,6 +182,12 @@
 		height: 100%;
 		z-index: 5; /* Niedrigerer z-index als die Zahlen */
 		pointer-events: none; /* Keine Interaktionen mit dem Container */
+		opacity: 0; /* Startet unsichtbar */
+		transition: opacity 0.5s ease; /* Transition für das Einblenden */
+	}
+
+	.preview-image-container.visible {
+		opacity: 1; /* Wird sichtbar */
 	}
 
 	.preview-image {
@@ -186,8 +199,8 @@
 		background-size: cover;
 		background-position: center;
 		opacity: 0.7; /* Etwas transparent */
-		filter: blur(25px); /* Starker Blur-Effekt */
-		transform: scale(1.1); /* Leicht vergrößert, um Blur-Kanten zu vermeiden */
+		filter: blur(20px); /* Starker Blur-Effekt */
+		transform: scale(1); /* Leicht vergrößert, um Blur-Kanten zu vermeiden */
 		transition: all 0.4s ease; /* Sanfte Übergänge */
 	}
 </style>
