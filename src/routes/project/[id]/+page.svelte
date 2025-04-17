@@ -104,20 +104,24 @@
 
 <style>
 	.container {
-		min-height: 100vh;
+		min-height: 98vh;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+		overflow: hidden; /* Verhindert Scrollen auf Containerebene */
 	}
 
 	.header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		position: absolute;
+		position: sticky;
 		top: 0;
 		left: 0;
 		right: 0;
 		padding: 1rem 2rem;
-		z-index: 10;
+		z-index: 100; /* Höherer z-index, um sicherzustellen, dass er immer oben bleibt */
+		background-color: #fff;
 	}
 
 	.header-button {
@@ -144,13 +148,13 @@
 	}
 
 	.footer {
-		position: fixed;
+		position: fixed; /* Wirklich fixiert, unabhängig vom Scrollen */
 		bottom: 1rem;
 		left: 0;
 		right: 0;
 		display: flex;
 		justify-content: center;
-		z-index: 10;
+		z-index: 100; /* Höher als andere Elemente */
 	}
 
 	button {
@@ -174,29 +178,24 @@
 	.project-container {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
-		min-height: 100vh;
+		height: calc(100vh - 5rem); /* Platz für Header und Footer */
 		max-width: 100%;
-		overflow: hidden;
-		padding-top: 3rem; /* Space for header */
-		padding-bottom: 3rem; /* Space for footer */
+		overflow: hidden; /* Kein Overflow für den Container selbst */
 	}
 
 	.project-info {
 		padding: 2rem;
-		position: sticky;
-		top: 3rem; /* Account for header */
-		height: calc(100vh - 6rem); /* Account for header and footer */
+		position: sticky; /* Sticky positionieren */
+		top: 4rem; /* Abstand vom Header */
+		height: calc(100vh - 8rem); /* Volle Höhe minus Header und Footer */
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		padding-top: 4rem; /* Extra space for back button */
+		overflow-y: hidden; /* Verhindert vertikales Scrollen */
+		max-height: calc(100vh - 8rem); /* Maximale Höhe begrenzen */
 	}
 
 	.about-btn {
-		position: absolute;
-		left: 50%;
-		top: 1rem;
-		transform: translateX(-50%);
 		font-family: 'AlteHaas', 'Arial', sans-serif;
 	}
 
@@ -207,9 +206,6 @@
 		font-size: 1rem;
 		text-align: left;
 		padding: 0;
-		position: absolute;
-		top: 1rem;
-		left: 2rem;
 		z-index: 20;
 		font-family: 'alteHaas', 'Arial', sans-serif;
 		text-transform: uppercase;
@@ -222,9 +218,6 @@
 		font-size: 1rem;
 		text-align: right;
 		padding: 0;
-		position: absolute;
-		top: 1rem;
-		right: 2rem;
 		z-index: 20;
 		font-family: 'alteHaas', 'Arial', sans-serif;
 		text-transform: uppercase;
@@ -292,8 +285,8 @@
 	}
 
 	.project-images {
-		overflow-y: auto;
-		height: calc(100vh - 6rem); /* Account for header and footer */
+		overflow-y: auto; /* Nur hier Scrollbar erlauben */
+		height: calc(100vh - 6rem); /* Anpassen an verfügbaren Platz */
 		padding: 2rem;
 		display: flex;
 		flex-direction: column;

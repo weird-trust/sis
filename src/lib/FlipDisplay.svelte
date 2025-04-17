@@ -6,6 +6,12 @@
 	let displayText = '';
 	let isAnimating = true;
 
+	// Speichern, ob die Animation bereits ausgeführt wurde
+	// Verwenden einer sessionStorage Variable, damit die Animation
+	// nur einmal pro Browsersitzung läuft
+	const animationKey = 'flipAnimationCompleted';
+	let skipAnimation = false;
+
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
 
 	// Projektitel vorbereiten (alle in Großbuchstaben)
@@ -14,8 +20,22 @@
 	projectTitles.push(finalText);
 
 	onMount(() => {
-		// Animation bei jedem Neuladen starten
-		startAnimation();
+		// Prüfen, ob die Animation bereits abgeschlossen wurde
+		if (typeof window !== 'undefined') {
+			skipAnimation = sessionStorage.getItem(animationKey) === 'true';
+
+			if (skipAnimation) {
+				// Animation überspringen und sofort finalen Text anzeigen
+				displayText = finalText;
+				isAnimating = false;
+			} else {
+				// Animation nur beim ersten Laden starten
+				startAnimation();
+			}
+		} else {
+			// Fallback für SSR
+			startAnimation();
+		}
 	});
 
 	async function startAnimation() {
@@ -35,8 +55,13 @@
 			}
 		}
 
-		// Animation beenden
+		// Animation beenden und als abgeschlossen markieren
 		isAnimating = false;
+
+		// In sessionStorage speichern, dass die Animation abgeschlossen wurde
+		if (typeof window !== 'undefined') {
+			sessionStorage.setItem(animationKey, 'true');
+		}
 	}
 
 	// Generiert zufälligen Text mit der angegebenen Länge

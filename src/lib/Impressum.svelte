@@ -73,7 +73,7 @@
 		text-align: left;
 		padding: 20px;
 		box-sizing: border-box;
-		z-index: 500;
+		z-index: 1000;
 	}
 
 	.overlay-content {
