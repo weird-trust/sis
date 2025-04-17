@@ -3,6 +3,7 @@
 	import { goto } from '$app/navigation';
 	import { projects, type Project } from '$lib/projects/projects';
 	import Impressum from '$lib/Impressum.svelte';
+	import About from '$lib/About.svelte';
 
 	// Projekt basierend auf der ID aus der URL abrufen
 	$: projectId = parseInt($page.params.id);
@@ -46,11 +47,14 @@
 
 <div class="container">
 	<div class="header">
-		<button type="button" class="back-button" on:click={goBack}>Close</button>
-		<button type="button" class="about-btn" on:click={toggleAbout} aria-label="Toggle About Section"
-			>ABOUT</button
+		<button type="button" class="header-button back-button" on:click={goBack}>Close</button>
+		<button
+			type="button"
+			class="header-button about-btn"
+			on:click={toggleAbout}
+			aria-label="Toggle About Section">ABOUT</button
 		>
-		<button type="button" class="next-button" on:click={goToNextProject}>Next Project</button>
+		<button type="button" class="header-button next-button" on:click={goToNextProject}>Next</button>
 	</div>
 
 	{#if project}
@@ -95,28 +99,7 @@
 	</div>
 
 	<Impressum bind:showImpressum />
-
-	{#if showAbout}
-		<div
-			class="overlay"
-			role="button"
-			tabindex="0"
-			on:click={toggleAbout}
-			on:keydown={(e) => e.key === 'Enter' && toggleAbout()}
-		>
-			<div class="overlay-content" on:click|stopPropagation>
-				<h3>Madeleine Hahn - Editorial & Graphic Design</h3>
-				<p>
-					Madeleine Hahn is a freelance designer based in Nuremberg, specializing in editorial and
-					graphic design. With a keen eye for aesthetics and structure, she crafts bespoke design
-					solutions tailored to meet the unique needs of her clients. Through creative and
-					strategically developed concepts, she creates visual experiences that are both engaging
-					and informative. Her work stands out for its precision and leaves a lasting impression
-					across print and digital media.
-				</p>
-			</div>
-		</div>
-	{/if}
+	<About bind:showAbout />
 </div>
 
 <style>
@@ -128,12 +111,36 @@
 	.header {
 		display: flex;
 		justify-content: space-between;
-		padding: 1rem;
+		align-items: center;
 		position: absolute;
 		top: 0;
 		left: 0;
 		right: 0;
+		padding: 1rem 2rem;
 		z-index: 10;
+	}
+
+	.header-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 1rem;
+		padding: 0;
+		font-family: 'AlteHaas', 'Arial', sans-serif;
+		text-transform: uppercase;
+		z-index: 20;
+	}
+
+	.back-button {
+		text-align: left;
+	}
+
+	.about-btn {
+		text-align: center;
+	}
+
+	.next-button {
+		text-align: right;
 	}
 
 	.footer {
@@ -144,13 +151,6 @@
 		display: flex;
 		justify-content: center;
 		z-index: 10;
-	}
-
-	.about-btn {
-		position: absolute;
-		left: 50%;
-		transform: translateX(-50%);
-		font-family: 'AlteHaas', 'Arial', sans-serif;
 	}
 
 	button {
@@ -192,6 +192,14 @@
 		padding-top: 4rem; /* Extra space for back button */
 	}
 
+	.about-btn {
+		position: absolute;
+		left: 50%;
+		top: 1rem;
+		transform: translateX(-50%);
+		font-family: 'AlteHaas', 'Arial', sans-serif;
+	}
+
 	.back-button {
 		background: none;
 		border: none;
@@ -202,6 +210,21 @@
 		position: absolute;
 		top: 1rem;
 		left: 2rem;
+		z-index: 20;
+		font-family: 'alteHaas', 'Arial', sans-serif;
+		text-transform: uppercase;
+	}
+
+	.next-button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 1rem;
+		text-align: right;
+		padding: 0;
+		position: absolute;
+		top: 1rem;
+		right: 2rem;
 		z-index: 20;
 		font-family: 'alteHaas', 'Arial', sans-serif;
 		text-transform: uppercase;
@@ -296,51 +319,6 @@
 		text-align: center;
 	}
 
-	.overlay {
-		position: fixed;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background-color: rgba(255, 255, 255, 0.5);
-		backdrop-filter: blur(10px);
-		-webkit-backdrop-filter: blur(10px);
-		color: black;
-		display: flex;
-		justify-content: left;
-		align-items: flex-start;
-		text-align: left;
-		padding: 20px;
-		box-sizing: border-box;
-		z-index: 1000;
-	}
-
-	.overlay-content {
-		max-width: 900px;
-	}
-
-	.overlay h3 {
-		font-family: 'AlteHaas', 'Arial', sans-serif;
-		font-size: 1.5rem;
-		margin-bottom: 1rem;
-	}
-
-	.overlay p {
-		font-family: 'AlteHaas', 'Arial', sans-serif;
-		font-size: 1.0625rem; /* 17px */
-		line-height: 1.2;
-		margin-bottom: 1rem;
-	}
-
-	.overlay .contact {
-		margin-top: 2rem;
-	}
-
-	.overlay a {
-		color: inherit;
-		text-decoration: underline;
-	}
-
 	/* Responsive Design */
 	@media (max-width: 768px) {
 		.project-container {
@@ -367,28 +345,7 @@
 		}
 
 		.header {
-			padding: 0.75rem;
+			padding: 0.75rem 1.5rem;
 		}
-
-		.back-button {
-			top: 0.75rem;
-			left: 2rem;
-			font-family: 'AlteHaas', 'Arial', sans-serif;
-		}
-	}
-
-	.next-button {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-size: 1rem;
-		text-align: right;
-		padding: 0;
-		position: absolute;
-		top: 1rem;
-		right: 2rem;
-		z-index: 20;
-		font-family: 'alteHaas', 'Arial', sans-serif;
-		text-transform: uppercase;
 	}
 </style>

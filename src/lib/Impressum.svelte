@@ -22,7 +22,7 @@
 		>
 			<h3 id="impressum-title">IMPRESSUM</h3>
 
-			<h3>Kontakt</h3>
+			<p><strong>Kontakt</strong></p>
 			<p>E-Mail: <a href="mailto:hallo@madeleinehahn.com">hallo@madeleinehahn.com</a></p>
 			<p>
 				Instagram: <a
@@ -43,7 +43,7 @@
 				</p>
 			</div>
 
-			<h3>Website-Entwicklung</h3>
+			<p><strong>Website-Entwicklung</strong></p>
 			<p>
 				Programmierung: <a
 					href="https://robertburtzik.com"
@@ -81,15 +81,25 @@
 	}
 
 	h3 {
-		font-family: 'AlteHaas', 'Arial', sans-serif;
-		font-size: 1.0625rem; /* 17px */
-		margin-bottom: 1.5rem;
+		font-family: 'Freight', 'Arial', sans-serif;
+		font-size: 2rem;
+		line-height: 0.9;
+		margin-bottom: 1rem;
+		font-weight: normal;
+		font-style: italic;
 	}
 
 	p {
 		font-family: 'AlteHaas', 'Arial', sans-serif;
 		font-size: 1.0625rem; /* 17px */
-		line-height: 1.6;
+		line-height: 1.2;
+		margin-bottom: 1rem;
+	}
+
+	p strong {
+		font-weight: normal;
+		font-size: 1.0625rem;
+		display: block;
 		margin-bottom: 0.5rem;
 	}
 
@@ -99,13 +109,11 @@
 	}
 
 	.disclaimer {
-		margin: 1.5rem 0;
-		font-size: 0.9rem;
-		line-height: 1.5;
+		margin: 2rem 0;
 	}
 
 	.disclaimer p {
-		font-size: 0.9rem;
-		margin-bottom: 0.75rem;
+		font-size: 1.0625rem;
+		margin-bottom: 1rem;
 	}
 </style>
