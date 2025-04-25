@@ -22,8 +22,10 @@
 		>
 			<h3 id="impressum-title">IMPRESSUM</h3>
 
+			<p><strong>Madeleine Hahn</strong></p>
+
 			<p><strong>Kontakt</strong></p>
-			<p>E-Mail: <a href="mailto:hallo@madeleinehahn.com">hallo@madeleinehahn.com</a></p>
+			<p>E-Mail: <a href="mailto:hello@madeleinehahn.com">hello@madeleinehahn.com</a></p>
 			<p>
 				Instagram: <a
 					href="https://instagram.com/mh.files"

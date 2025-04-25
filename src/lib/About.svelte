@@ -16,7 +16,7 @@
 		aria-label="Close About Section"
 	>
 		<div class="overlay-content" on:click|stopPropagation>
-			<h3>Madeleine Hahn - Editorial & Graphic Design</h3>
+			<h3>ABOUT</h3>
 			<p>
 				Madeleine Hahn ist eine freiberufliche Designerin aus Nürnberg mit dem Fokus auf Editorial-
 				und Grafikdesign. Ihre Gestaltung basiert auf klaren Konzepten, durchdachter Typografie und
@@ -24,7 +24,7 @@
 				ansprechend als auch funktional sind und Inhalte präzise kommunizieren.
 			</p>
 			<p class="contact">
-				Sag <a href="mailto:hallo@madeleinehahn.com">hallo@madeleinehahn.com</a>!
+				Sag <a href="mailto:hello@madeleinehahn.com">hello@madeleinehahn.com</a>!
 			</p>
 		</div>
 	</div>
@@ -59,6 +59,8 @@
 		font-size: 2rem;
 		line-height: 0.9;
 		margin-bottom: 1rem;
+		font-style: italic;
+		font-weight: normal;
 	}
 
 	.overlay p {
