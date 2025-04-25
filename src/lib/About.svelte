@@ -16,7 +16,7 @@
 		aria-label="Close About Section"
 	>
 		<div class="overlay-content" on:click|stopPropagation>
-			<h3>ABOUT</h3>
+			<h3>Madeleine Hahn</h3>
 			<p>
 				Madeleine Hahn ist eine freiberufliche Designerin aus Nürnberg mit dem Fokus auf Editorial-
 				und Grafikdesign. Ihre Gestaltung basiert auf klaren Konzepten, durchdachter Typografie und

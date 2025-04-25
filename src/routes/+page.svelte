@@ -35,7 +35,7 @@
 			{#if hoveredProject}
 				{hoveredProject.title.toUpperCase()}
 			{:else}
-				<FlipDisplay finalText="MADELEINE HAHN" />
+				<FlipDisplay finalText="Madeleine Hahn" />
 			{/if}
 		</h1>
 		<h2 class="subtitle">

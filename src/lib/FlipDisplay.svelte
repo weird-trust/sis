@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { projects } from '$lib/projects/projects';
 
-	export let finalText = 'MADELEINE HAHN';
+	export let finalText = 'Madeleine Hahn';
 	let displayText = '';
 	let isAnimating = true;
 
@@ -12,7 +12,8 @@
 	const animationKey = 'flipAnimationCompleted';
 	let skipAnimation = false;
 
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
+	const chars =
+		'ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyzZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
 
 	// Projektitel vorbereiten (alle in Großbuchstaben)
 	const projectTitles = projects.map((p) => p.title.toUpperCase());

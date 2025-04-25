@@ -20,32 +20,25 @@
 			role="dialog"
 			aria-labelledby="impressum-title"
 		>
-			<h3 id="impressum-title">IMPRESSUM</h3>
-
-			<p><strong>Madeleine Hahn</strong></p>
-
-			<p><strong>Kontakt</strong></p>
-			<p>E-Mail: <a href="mailto:hello@madeleinehahn.com">hello@madeleinehahn.com</a></p>
+			<h3 id="impressum-title">Kontakt</h3>
 			<p>
-				Instagram: <a
-					href="https://instagram.com/mh.files"
-					target="_blank"
-					rel="noopener noreferrer">mh.files</a
+				E-Mail: <a href="mailto:hello@madeleinehahn.com">hello@madeleinehahn.com</a><br />
+				Instagram:
+				<a href="https://instagram.com/mh.files" target="_blank" rel="noopener noreferrer"
+					>mh.files</a
 				>
 			</p>
 
 			<div class="disclaimer">
 				<p>
 					Die Inhalte dieser Website wurden mit größter Sorgfalt erstellt. Für deren Richtigkeit,
-					Vollständigkeit und Aktualität übernehme ich jedoch keine Haftung.
-				</p>
-				<p>
-					Alle Inhalte dieser Website unterliegen dem deutschen Urheberrecht. Jegliche Nutzung oder
-					Vervielfältigung bedarf meiner schriftlichen Zustimmung.
+					Vollständigkeit und Aktualität übernehme ich jedoch keine Haftung. Alle Inhalte dieser
+					Website unterliegen dem deutschen Urheberrecht. Jegliche Nutzung oder Vervielfältigung
+					bedarf meiner schriftlichen Zustimmung.
 				</p>
 			</div>
 
-			<p><strong>Website-Entwicklung</strong></p>
+			<h3>Website-Entwicklung</h3>
 			<p>
 				Programmierung: <a
 					href="https://robertburtzik.com"
