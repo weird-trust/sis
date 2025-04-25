@@ -16,7 +16,7 @@
 		'ABCDEFGHIJKLMNOPQRSTUVWXYabcdefghijklmnopqrstuvwxyzZ0123456789!@#$%^&*()_+[]{}|;:,.<>?';
 
 	// Projektitel vorbereiten (alle in Großbuchstaben)
-	const projectTitles = projects.map((p) => p.title.toUpperCase());
+	const projectTitles = projects.map((p) => p.title);
 	// Wir fügen den finalen Text am Ende hinzu
 	projectTitles.push(finalText);
 
