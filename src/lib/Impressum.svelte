@@ -45,8 +45,10 @@
 					target="_blank"
 					rel="noopener noreferrer">Robert Burtzik</a
 				>
+				<br />
+
+				Design: Madeleine Hahn
 			</p>
-			<p>Design: Madeleine Hahn</p>
 		</div>
 	</div>
 {/if}
