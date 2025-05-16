@@ -25,6 +25,10 @@
 	let isMobile = false; // Flag für mobile Ansicht
 	let showMobileList = false; // Flag für mobile Liste
 
+	// Variablen für die mobile Slideshow
+	let mobileSlideIndex = 0;
+	let mobileSlideInterval: ReturnType<typeof setInterval> | null = null;
+
 	// Erstellt einen Punkt mit einfachen Positionswerten
 	const createPoint = (project: Project): PointPosition => {
 		return {
@@ -36,6 +40,14 @@
 			vy: (Math.random() - 0.5) * 0.05 // Etwas schneller für bessere Bewegung
 		};
 	};
+
+	// Prüft, ob es sich um ein mobiles Gerät handelt
+	function checkMobile(): void {
+		if (browser) {
+			// Einfache Methode zur Erkennung von Mobilgeräten basierend auf Bildschirmbreite
+			isMobile = window.innerWidth < 768; // 768px ist ein üblicher Breakpoint für Tablets/Mobile
+		}
+	}
 
 	onMount(() => {
 		// Prüfen, ob es sich um ein mobiles Gerät handelt
@@ -51,21 +63,10 @@
 
 		// Animation starten
 		startAnimation();
-	});
 
-	onDestroy(() => {
-		// Animation aufräumen
-		if (animationFrame) {
-			cancelAnimationFrame(animationFrame);
-		}
-		if (browser) {
-			window.removeEventListener('resize', checkMobile);
-		}
+		// Starte die mobile Slideshow nach dem Mounten
+		startMobileSlideshow();
 	});
-
-	function checkMobile() {
-		isMobile = window.innerWidth < 768;
-	}
 
 	// Animation der Punkte
 	function startAnimation(): void {
@@ -131,22 +132,75 @@
 		goto(`/project/${projectId}`);
 	}
 
+	// Funktion zum Starten der mobilen Slideshow
+	function startMobileSlideshow() {
+		if (isMobile && browser) {
+			// Starte die Slideshow nur, wenn das Menü nicht geöffnet ist
+			if (!showMobileList) {
+				mobileSlideInterval = setInterval(() => {
+					// Rotiere durch die Projekte
+					mobileSlideIndex = (mobileSlideIndex + 1) % projects.length;
+				}, 2000); // Alle 3 Sekunden wechseln
+			}
+		}
+	}
+
+	// Stoppe die Slideshow
+	function stopMobileSlideshow() {
+		if (mobileSlideInterval) {
+			clearInterval(mobileSlideInterval);
+			mobileSlideInterval = null;
+		}
+	}
+
+	// Modifiziere die toggleMobileList Funktion
 	function toggleMobileList(): void {
 		showMobileList = !showMobileList;
+		// Wenn das Menü geschlossen wird, starte die Slideshow erneut
+		if (!showMobileList) {
+			startMobileSlideshow();
+		} else {
+			stopMobileSlideshow();
+		}
 	}
+
+	onDestroy(() => {
+		// Animation aufräumen
+		if (animationFrame) {
+			cancelAnimationFrame(animationFrame);
+		}
+		// Slideshow aufräumen
+		stopMobileSlideshow();
+
+		if (browser) {
+			window.removeEventListener('resize', checkMobile);
+		}
+	});
 </script>
 
 <div class="numbers-container" bind:this={container}>
 	{#if isMobile}
+		<!-- Mobile Background Image -->
+		<div class="mobile-background-container">
+			{#each projects as project, i}
+				<div
+					class="mobile-background-image"
+					class:active={i === mobileSlideIndex}
+					style="background-image: url('{project.images[0]}')"
+				></div>
+			{/each}
+		</div>
+
 		<!-- Mobile Layout mit Button und Liste -->
 		<div class="mobile-controls">
-			<button class="toggle-projects-btn" on:click={toggleMobileList}>
-				{showMobileList ? 'Schließen' : 'Projekte anzeigen'}
-			</button>
+			{#if !showMobileList}
+				<button class="toggle-projects-btn" on:click={toggleMobileList}> Projekte anzeigen</button>
+			{/if}
 
 			{#if showMobileList}
 				<div class="mobile-projects-overlay">
 					<div class="mobile-projects-list">
+						<button class="close-btn" on:click={toggleMobileList}>×</button>
 						{#each projects as project (project.id)}
 							<div class="mobile-project-item" on:click={() => navigateToProject(project.id)}>
 								<span class="project-number">{project.number}</span>
@@ -189,7 +243,6 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		z-index: 10; /* Erhöhter z-index für den Container */
 	}
 
 	.number-points-container {
@@ -269,11 +322,11 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		z-index: 20;
+		z-index: 100; /* Erhöhter z-index, höher als andere Elemente */
 	}
 
 	.toggle-projects-btn {
-		background-color: white;
+		background-color: rgba(255, 255, 255, 0.9); /* Leicht transparenter weißer Hintergrund */
 		border: 1px solid black;
 		border-radius: 30px;
 		padding: 12px 20px;
@@ -281,9 +334,10 @@
 		font-size: 16px;
 		cursor: pointer;
 		margin-bottom: 50%;
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten für bessere Sichtbarkeit */
 		z-index: 1001;
 		position: relative;
+		animation: fadeIn 0.3s ease-out;
 	}
 
 	.mobile-projects-overlay {
@@ -292,50 +346,65 @@
 		left: 0;
 		width: 100%;
 		height: 100%;
-		background-color: rgba(255, 255, 255, 0.95);
+		background-color: rgba(255, 255, 255, 0.5); /* Heller Hintergrund wie im Impressum */
+		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 		display: flex;
-		justify-content: center;
-		align-items: center;
+		justify-content: left; /* Linksbündig wie im Impressum */
+		align-items: flex-start; /* Oben ausgerichtet wie im Impressum */
+		text-align: center;
+		padding: 3rem;
+		box-sizing: border-box;
 		z-index: 1000;
 		animation: fadeIn 0.2s ease-out;
 	}
 
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-		}
-		to {
-			opacity: 1;
-		}
-	}
-
 	.mobile-projects-list {
-		background-color: white;
-		width: 90%;
-		max-width: 400px;
-		border-radius: 10px;
-		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-		max-height: 80vh;
-		overflow-y: auto;
-		animation: slideUp 0.3s ease-out;
+		background-color: transparent; /* Kein Hintergrund, da der Overlay bereits einen hat */
+		width: 100%;
+		height: 100%;
+		overflow-y: scroll;
+		animation: fadeIn 0.3s ease-out; /* Einfachere Animation */
 		z-index: 1001;
-		padding: 20px 0;
+		position: relative;
 	}
 
-	@keyframes slideUp {
-		from {
-			transform: translateY(50px);
-			opacity: 0;
-		}
-		to {
-			transform: translateY(0);
-			opacity: 1;
-		}
+	/* Globaler Stil, der im <style> Tag definiert werden kann */
+	:global(.no-scroll) {
+		overflow: hidden !important;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+	}
+
+	/* Verhindert das "Springen" beim Ein-/Ausblenden der Scrollbar */
+	:global(html) {
+		overflow-y: scroll; /* Immer eine vertikale Scrollbar anzeigen */
+		scrollbar-width: thin; /* Firefox */
+	}
+
+	:global(body) {
+		padding-right: 0 !important; /* Kein Padding, auch wenn die Scrollbar versteckt ist */
+		margin-right: calc(100vw - 100%); /* Kompensiert den Platz der Scrollbar */
+	}
+
+	/* Für Webkit-basierte Browser (Chrome, Safari, neue Edge-Versionen) */
+	:global(::-webkit-scrollbar) {
+		width: 8px; /* Schmale Scrollbar */
+	}
+
+	:global(::-webkit-scrollbar-track) {
+		background: transparent;
+	}
+
+	:global(::-webkit-scrollbar-thumb) {
+		background-color: rgba(0, 0, 0, 0.2);
+		border-radius: 20px;
 	}
 
 	.mobile-project-item {
-		padding: 16px 20px;
-		border-bottom: 1px solid #eee;
+		padding: 16px 0;
+
 		display: flex;
 		flex-direction: column;
 		cursor: pointer;
@@ -352,20 +421,80 @@
 	.project-number {
 		font-family: 'Freight', 'Times New Roman', Times, serif;
 		font-style: italic;
-		font-size: 24px;
-		margin-bottom: 4px;
+		font-size: 2rem;
+		line-height: 0.9;
+		margin-bottom: 0.5rem;
+		font-weight: normal;
+
+		@media screen and (max-width: 768px) {
+			font-size: 1.4rem;
+			line-height: 0.9;
+			margin-bottom: 0.2rem;
+			font-weight: normal;
+		}
 	}
 
 	.project-title {
 		font-family: 'AlteHaas', 'Arial', sans-serif;
-		font-size: 18px;
-		margin-bottom: 2px;
+		font-size: 1.0625rem; /* 17px wie im Impressum */
+		margin-bottom: 0.25rem;
+
+		@media screen and (max-width: 768px) {
+			font-size: 1.4rem;
+			line-height: 0.9;
+			margin-bottom: 0.5rem;
+			font-weight: normal;
+		}
 	}
 
 	.project-subtitle {
 		font-family: 'Freight', 'Times New Roman', Times, serif;
-		font-style: italic;
-		font-size: 16px;
-		color: #000;
+		font-size: 1.0625rem;
+	}
+
+	.close-btn {
+		position: fixed;
+		top: 10px;
+		right: 10px;
+		background: none;
+		border: none;
+		font-size: 28px;
+		cursor: pointer;
+		width: 40px;
+		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: black; /* Schwarz statt weiß für das X */
+		z-index: 1002;
+	}
+
+	/* Mobile Background Slideshow */
+	.mobile-background-container {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 3; /* Unter den Punkten, aber über dem normalen Hintergrund */
+		pointer-events: none; /* Keine Interaktionen mit dem Container */
+	}
+
+	.mobile-background-image {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-size: cover;
+		background-position: center;
+		opacity: 0;
+		filter: blur(20px); /* Starker Blur-Effekt */
+		transition: opacity 1.5s ease; /* Sanfte Übergänge */
+		transform: scale(1.1); /* Leicht vergrößert, um Blur-Kanten zu vermeiden */
+	}
+
+	.mobile-background-image.active {
+		opacity: 0.5; /* Transparenter als Desktop, damit die UI lesbar bleibt */
 	}
 </style>

@@ -30,6 +30,7 @@
 	<button type="button" class="about" on:click={toggleAbout} aria-label="Toggle About Section"
 		>ABOUT</button
 	>
+
 	<div class="title-container">
 		<h1>
 			{#if hoveredProject}
@@ -66,7 +67,7 @@
 
 	.title-container {
 		position: relative;
-		z-index: 50; /* Sehr hoher z-index für den Titelcontainer */
+		z-index: 11; /* Sehr hoher z-index für den Titelcontainer */
 	}
 
 	button {
@@ -83,7 +84,7 @@
 	}
 
 	.about {
-		padding: 1rem;
+		padding: 0.75rem 1.5rem;
 	}
 
 	h1 {
@@ -141,6 +142,6 @@
 		cursor: pointer;
 		font-style: normal;
 		padding: 1rem;
-		z-index: 50; /* Sehr hoher z-index */
+		z-index: 50;
 	}
 </style>

@@ -316,29 +316,35 @@
 	@media (max-width: 768px) {
 		.project-container {
 			grid-template-columns: 1fr;
-			padding-top: 4rem; /* More space for header */
+			height: auto; /* Wichtig: Auto-Höhe statt fester Höhe */
+			overflow: visible; /* Erlaubt normales Scrollen */
+			margin-bottom: 50px;
 		}
 
 		.project-info {
-			position: relative;
+			position: relative; /* Statt sticky */
 			height: auto;
-			padding: 1.5rem;
+			padding: 2rem 1rem;
 			top: 0;
-			padding-top: 3.5rem; /* Adjust for mobile */
+			max-height: none; /* Entferne Höhenbegrenzung */
+			overflow-y: visible; /* Erlaube normales Scrollen */
 		}
 
 		.project-images {
-			height: auto;
+			height: auto; /* Auto-Höhe statt fester Höhe */
+			overflow-y: visible; /* Kein separates Scrollverhalten mehr */
 			padding: 1.5rem;
 		}
 
-		.project-description {
-			font-size: 1rem; /* Slightly smaller on mobile */
-			line-height: 1.5;
+		.container {
+			overflow-y: auto; /* Erlaube scrollen am Haupt-Container */
 		}
 
+		/* Header fixiert lassen */
 		.header {
+			position: fixed; /* Statt sticky */
 			padding: 0.75rem 1.5rem;
+			background-color: #fff;
 		}
 	}
 </style>
